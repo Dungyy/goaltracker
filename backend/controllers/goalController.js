@@ -2,42 +2,35 @@
 const asyncHandler = require("express-async-handler");
 
 // Bring in DB models
-const Goal = require("../models/goalModel");
+const Task = require("../models/goalModel");
 
 // @Desc   Gets Goals
-// @route   GET /api/goals
-// @access  Private
 const getGoal = asyncHandler(async (req, res) => {
-  const goals = await Goal.find();
+  const goals = await Task.find({}).sort({ createdAt: -1 }); //use isActive to show True / False
 
   res.status(200).json(goals);
 });
 
 // @Desc   sets Goals
-// @route   POST /api/goals
-// @access  Private
-const setGoal = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
-    res.status(400);
-    throw new Error("Please add a text field");
-  }
-  const goal = await Goal.create({
-    text: req.body.text,
-  });
+const setGoal = async (req, res) => {
+  const { Title, Day, Message, Comment } = req.body;
 
-  res.status(200).json(goal);
-});
+  try {
+    const workout = await Task.create({ Title, Day, Message, Comment });
+    res.status(200).json(workout);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // @Desc   Update Goals
-// @route   PUT /api/goals/:id
-// @access  Private
 const updateGoal = asyncHandler(async (req, res) => {
-  const goal = await Goal.findById(req.params.id);
+  const goal = await Task.findById(req.params.id);
   if (!goal) {
     res.status(400);
-    throw new Error("Goal Not Found");
+    throw new Error("Task Not Found");
   }
-  const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+  const updatedGoal = await Task.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
 
@@ -45,15 +38,13 @@ const updateGoal = asyncHandler(async (req, res) => {
 });
 
 // @Desc   DELETE Goals
-// @route   DELETE /api/goals/:id
-// @access  Private
 const deleteGoal = asyncHandler(async (req, res) => {
-  const goal = await Goal.findById(req.params.id);
+  const goal = await Task.findById(req.params.id);
   if (!goal) {
     res.status(400);
-    throw new Error("Goal Not Found");
+    throw new Error("Task Not Found");
   }
-  await Goal.deleteOne();
+  await Task.deleteOne();
 
   res.status(200).json({ id: req.params.id });
 });

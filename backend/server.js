@@ -10,15 +10,15 @@ const app = express();
 //connection to database
 connectDB();
 
-// middeware
+// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.use("/api/goals", require("./routes/goalRoutes"));
+app.use("/api/", require("./routes/goalRoutes"));
 
-// Uses our error handler and overwrites deafaults for checking break
-// Set env file to production to use deafault error handler
+// Uses our error handler and overwrites defaults for checking break
+// Set env file to production to use default error handler
 app.use(errorHandler);
 
 app.listen(PORT, () =>

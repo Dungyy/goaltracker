@@ -14,7 +14,7 @@ router.route("/").get(getGoal).post(setGoal);
 // router.get('/', getGoal)
 // router.post('/', setGoal)
 
-router.route("/:id").delete(deleteGoal).put(updateGoal);
+router.route("/:id").delete(deleteGoal).patch(updateGoal);
 // line Above is the same as below just cleaner
 // router.put('/:id', updateGoal)
 // router.delete('/:id', deleteGoal)
