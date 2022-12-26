@@ -1,9 +1,9 @@
 // package that does all the err and catching for us
-const asyncHandler = require("express-async-handler");
+import asyncHandler from "express-async-handler";
 
 // Bring in DB models
-const mongoose = require("mongoose");
-const Task = require("../models/goalModel");
+import { Types } from "mongoose";
+import Task from "../models/goalModel.js";
 
 // @Desc   Get single Goal  //
 const getGoal = asyncHandler(async (req, res) => {
@@ -59,7 +59,7 @@ const setGoal = async (req, res) => {
 const updateGoal = asyncHandler(async (req, res) => {
   // Validate input
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!Types.ObjectId.isValid(id)) {
     return res.status(400).send({ message: "Invalid task ID" });
   }
 
@@ -92,7 +92,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
-module.exports = {
+export {
   getGoal,
   getGoals,
   setGoal,

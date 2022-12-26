@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
 // function dayOfWeek() {
 //   [
@@ -16,7 +16,7 @@ const mongoose = require("mongoose");
 //   ];
 // }
 
-const goalSchema = mongoose.Schema(
+const goalSchema = Schema(
   {
     isActive: {
       type: Boolean,
@@ -44,4 +44,4 @@ const goalSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Task", goalSchema);
+export default model("Task", goalSchema);
