@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "goal mern app",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js"
